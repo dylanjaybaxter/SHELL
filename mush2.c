@@ -185,6 +185,11 @@ int main(int argc, char const *argv[]) {
 
                 /*Move to next stage*/
                 curStage = curStage->next;
+                if(curStage != NULL){
+                    printf("Should move to next stage\n");
+                }else{
+                    printf("Last stage\n");
+                }
                 if(!stageOneFlag){
                     close(prepipe[0]);
                     close(prepipe[1]);
