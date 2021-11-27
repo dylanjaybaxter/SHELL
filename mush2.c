@@ -142,7 +142,7 @@ int main(int argc, char const *argv[]) {
                 }
 
                 /*If there is another stage, pipe*/
-                if(curStage->next != NULL){
+                if(&(pipeln->stage[stage+1]) != NULL){
                     if(DEBUG){
                         printf("Creating pipe...\n");
                     }
@@ -155,7 +155,7 @@ int main(int argc, char const *argv[]) {
                 /*Set fdout*/
                 if(curStage->outname == NULL){
                     /*If first stage, set to stdin*/
-                    if(curStage->next == NULL){
+                    if(&(pipeln->stage[stage+1]) == NULL){
                         fdout = 0;
                     }
                     /*If else set to pipe value*/
