@@ -206,6 +206,9 @@ int main(int argc, char const *argv[]) {
                 close(prepipe[1]);
 
                 /*Wait for all children to exit*/
+                if(DEBUG){
+                    printf("Waiting for %d procs\n", numProc);
+                }
                 while(numProc < 0){
                     if(-1 == (pid = wait(&childStat))){
                         perror("Wait failed");
@@ -217,6 +220,7 @@ int main(int argc, char const *argv[]) {
                     else{
                         printf("Process %d suceeded.\n", pid);
                     }
+                    fflush(stdout);
                     numProc--;
                 }
                 /*Re-print the marker*/
