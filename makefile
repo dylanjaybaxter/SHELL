@@ -6,8 +6,7 @@ LDFLAGS = -g
 all: mush2 mush2.o
 
 mush2: mush2.o
-	$(CC) $(CFLAGS) -L ~pn-cs357/Given/Mush/libmush/lib64 -o mush2 mush2.o \
-	-ltalk -l ncurses
+	$(CC) $(CFLAGS) -L ~pn-cs357/Given/Mush/libmush/lib64 -o mush2 mush2.o
 
 mush2.o: mush2.c
 	$(CC) $(CFLAGS) -I ~pn-cs357/Given/Mush/libmush/include -c -o \
