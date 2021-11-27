@@ -21,6 +21,7 @@ Description: This file contains a the main functionality for a limited shell
 
 /*other*/
 #include <string.h>
+#include <limits.h>
 #include "mush.h"
 
 /*Macros*/
@@ -37,6 +38,7 @@ int main(int argc, char const *argv[]) {
     int fdout = 1;
     FILE* fptr;
     char* line;
+    char pwd[PATH_MAX];
 
     /*Pipeline vars*/
     pipeline pipeln;
@@ -81,7 +83,12 @@ int main(int argc, char const *argv[]) {
     }
 
     /*Print the marker*/
-    printf(":-P ");
+    if(NULL == getcwd(pwd, PATH_MAX)){
+        perror("PWD");
+        exit(EXIT_FAILURE);
+    }
+    printf("%s:-P ", pwd);
+
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
         /*Parse line to get command info*/
@@ -98,7 +105,14 @@ int main(int argc, char const *argv[]) {
             if(DEBUG){
                 printf("cd detected...\n");
             }
-            chdir(pipeln->stage->argv[1]);
+            if(-1 == chdir(pipeln->stage->argv[1])){
+                perror("chdir");
+                exit(EXIT_FAILURE);
+            }
+            if(NULL == getcwd(pwd, PATH_MAX)){
+                perror("PWD");
+                exit(EXIT_FAILURE);
+            }
         }
         /*Fork child processes to create pipelnline*/
         else{
@@ -224,7 +238,7 @@ int main(int argc, char const *argv[]) {
                     numProc--;
                 }
                 /*Re-print the marker*/
-                printf(":-P ");
+                printf("%s:-P ", pwd);
                 fflush(stdout);
             }
 
