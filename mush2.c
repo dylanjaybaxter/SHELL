@@ -38,7 +38,7 @@ int main(int argc, char const *argv[]) {
     char* line;
 
     /*Pipeline vars*/
-    pipline pipeln;
+    pipeline pipeln;
     struct clstage *curStage;
     int postpipe[2];
     int prepipe[2];
