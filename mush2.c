@@ -81,7 +81,7 @@ int main(int argc, char const *argv[]) {
     }
 
     /*Print the marker*/
-    printf(":-P");
+    printf(":-P ");
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
         /*Parse line to get command info*/
@@ -196,8 +196,8 @@ int main(int argc, char const *argv[]) {
                 /*Execute order 66*/
                 if(-1 == execvp(curStage->argv[0], curStage->argv)){
                     perror("Execvp");
-                    exit(EXIT_FAILURE);
                 }
+                return -1;
             }
             /*If exit as parent*/
             else{
@@ -220,7 +220,7 @@ int main(int argc, char const *argv[]) {
                     numProc--;
                 }
                 /*Re-print the marker*/
-                printf(":-P");
+                printf(":-P ");
                 fflush(stdout);
             }
 
