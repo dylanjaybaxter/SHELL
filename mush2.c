@@ -46,6 +46,7 @@ int main(int argc, char const *argv[]) {
     int postpipe[2];
     int prepipe[2];
     int stageOneFlag;
+    int stage = 0;
 
     /*Forking Vars*/
     int forkVal;
@@ -117,7 +118,8 @@ int main(int argc, char const *argv[]) {
         /*Fork child processes to create pipelnline*/
         else{
             /*Set the current stage*/
-            curStage = pipeln->stage;
+            stage = 0;
+            curStage = pipeln->stage[stage];
             while(curStage != NULL){
                 /*Set fdin*/
                 /*If input is null*/
@@ -184,7 +186,8 @@ int main(int argc, char const *argv[]) {
                 numProc = numProc+1;
 
                 /*Move to next stage*/
-                curStage = curStage->next;
+                stage = stage + 1;
+                curStage = pipeln->stage[stage];
                 if(curStage != NULL){
                     printf("Should move to next stage\n");
                 }else{
