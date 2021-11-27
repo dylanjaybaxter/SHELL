@@ -20,6 +20,7 @@ Description: This file contains a the main functionality for a limited shell
 #include <sys/wait.h>
 
 /*other*/
+#include <string.h>
 #include "mush.h"
 
 /*Macros*/
@@ -89,7 +90,7 @@ int main(int argc, char const *argv[]) {
         }
 
         /*Check for cd and run if present*/
-        if((pipeln->length == 1) && pipeln->stage->argv[0] == "cd\0"){
+        if((pipeln->length == 1) && !(strcmp(pipeln->stage->argv[0],"cd\0"))){
             if(DEBUG){
                 printf("cd detected...\n");
             }
