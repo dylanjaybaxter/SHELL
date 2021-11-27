@@ -58,6 +58,10 @@ int main(int argc, char const *argv[]) {
     sa.sa_flags = 0;
     sigaction(SIGINT, &sa, NULL);
 
+    if(DEBUG){
+        printf("Args: %d", argc);
+    }
+
     /*If 1 arg*/
     if(argc == 1){
         /*Set fd to stdin*/
