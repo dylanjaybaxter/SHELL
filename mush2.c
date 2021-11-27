@@ -80,25 +80,25 @@ int main(int argc, char const *argv[]) {
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
         /*Parse line to get command info*/
-        pipeln = crack_pipelnline(line);
-        if(pipeln.length == 0){
+        pipeln = (pipeline)crack_pipeline(line);
+        if(pipeln->length == 0){
             printf("What the hell\n -David Lynch\n");
         }
         if(DEBUG){
-            print_pipelnline(stdout, pipeln);
+            print_pipeline(stdout, pipeln);
         }
 
         /*Check for cd and run if present*/
-        if((pipeln.length == 1) && pipeln.stage->argv[0] == "cd\0"){
+        if((pipeln->length == 1) && pipeln->stage->argv[0] == "cd\0"){
             if(DEBUG){
                 printf("cd detected...\n");
             }
-            chdir(pipeln.stage->argv[1]);
+            chdir(pipeln->stage->argv[1]);
         }
         /*Fork child processes to create pipelnline*/
         else{
             /*Set the current stage*/
-            curStage = pipeln.stage;
+            curStage = pipeln->stage;
             while(curStage != NULL){
                 /*Set fdin*/
                 /*If input is null*/
