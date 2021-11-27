@@ -42,7 +42,7 @@ int main(int argc, char const *argv[]) {
 
     /*Pipeline vars*/
     pipeline pipeln;
-    struct clstage *curStage;
+    clstage curStage;
     int postpipe[2];
     int prepipe[2];
     int stageOneFlag;
