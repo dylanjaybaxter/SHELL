@@ -24,5 +24,3 @@ test: mush2
 valgrind: mush2
 	valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all \
 	./mush2 test_cmd
-debug: mush2
-	gdb mush2
