@@ -20,7 +20,7 @@ Description: This file contains a the main functionality for a limited shell
 #include <sys/wait.h>
 
 /*other*/
-/*#include "mush.h"*/
+#include "mush.h"
 
 /*Macros*/
 #define DEBUG 1
