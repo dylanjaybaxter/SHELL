@@ -313,7 +313,6 @@ int main(int argc, char const *argv[]) {
                 /*Re-print the marker*/
                 printf("/%s:8-P ", pwd);
                 fflush(stdout);
-        }
     }
     yylex_destroy();
     return 0;
