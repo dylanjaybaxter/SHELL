@@ -125,11 +125,18 @@ int main(int argc, char const *argv[]) {
                 if(curStage->inname == NULL){
                     /*If first stage, set to stdin*/
                     if(stage == 0){
+                        if(DEBUG){
+                            printf("Stage %d: fdin is stdin",stage);
+                        }
                         fdin = 0;
                     }
                     /*If else set to pipe value*/
                     else{
                         fdin = prepipe[1];
+                        if(DEBUG){
+                            printf("Stage %d: fdin is pipe(%d)",
+                            stage, prepipe[1]);
+                        }
                     }
                 }/*If input is named, open file*/
                 else{
@@ -138,16 +145,23 @@ int main(int argc, char const *argv[]) {
                         perror(curStage->inname);
                         exit(EXIT_FAILURE);
                     }
+                    if(DEBUG){
+                        printf("Stage %d: fdin is %s",
+                        stage, curStage->inname);
+                    }
                 }
+
 
                 /*If there is another stage, pipe*/
                 if(stage < ((pipeln->length)-1)){
-                    if(DEBUG){
-                        printf("Creating pipe...\n");
-                    }
+
                     if(-1 == pipe(postpipe)){
                         perror("Piping");
                         exit(EXIT_FAILURE);
+                    }
+                    if(DEBUG){
+                        printf("Created pipe [%d %d]...\n",
+                        postpipe[0], postpipe[1]);
                     }
                 }
 
@@ -155,11 +169,19 @@ int main(int argc, char const *argv[]) {
                 if(curStage->outname == NULL){
                     /*If first stage, set to stdin*/
                     if(stage < ((pipeln->length)-1)){
-                        fdout = 0;
+                        fdout = 1;
+                        if(DEBUG){
+                            printf("Stage %d: fdin is stdout",
+                            stage);
+                        }
                     }
                     /*If else set to pipe value*/
                     else{
                         fdout = postpipe[0];
+                        if(DEBUG){
+                            printf("Stage %d: fdin is postpipe(%d)",
+                            stage, postpipe[0]);
+                        }
                     }
                 }/*If output is named, open file*/
                 else{
@@ -167,6 +189,10 @@ int main(int argc, char const *argv[]) {
                         O_WRONLY|O_CREAT|O_TRUNC, 0666))){
                         perror(curStage->outname);
                         exit(EXIT_FAILURE);
+                    }
+                    if(DEBUG){
+                        printf("Stage %d: fdin is %s",
+                        stage, curStage->outname);
                     }
                 }
 
