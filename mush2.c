@@ -158,6 +158,7 @@ int main(int argc, char const *argv[]) {
                         if(-1 == (fdin = open(curStage->inname,
                             O_RDONLY, 0666))){
                             perror(curStage->inname);
+                            forkVal = -1;
                             break;
                         }
                         if(DEBUG){
@@ -206,6 +207,7 @@ int main(int argc, char const *argv[]) {
                                 close(prepipe[WRITE_END]);
                                 close(prepipe[READ_END]);
                             }
+                            forkVal = -1;
                             break;
                         }
                         if(DEBUG){
@@ -290,7 +292,7 @@ int main(int argc, char const *argv[]) {
                     return -1;
                 }
                 /*If exit as parent*/
-                else{
+                else if(forkVal == PARENT){
                     /*Wait for all children to exit*/
                     if(DEBUG){
                         printf("Waiting for %d procs\n", numProc);
