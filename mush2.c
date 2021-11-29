@@ -202,8 +202,10 @@ int main(int argc, char const *argv[]) {
                         if(-1 == (fdout = open(curStage->outname,
                             O_WRONLY|O_CREAT|O_TRUNC, 0666))){
                             perror(curStage->outname);
-                            close(prepipe[WRITE_END]);
-                            close(prepipe[READ_END]);
+                            if(stage > 0){
+                                close(prepipe[WRITE_END]);
+                                close(prepipe[READ_END]);
+                            }
                             break;
                         }
                         if(DEBUG){
