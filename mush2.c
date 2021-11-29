@@ -126,7 +126,7 @@ int main(int argc, char const *argv[]) {
                     /*If first stage, set to stdin*/
                     if(stage == 0){
                         if(DEBUG){
-                            printf("Stage %d: fdin is stdin",stage);
+                            printf("Stage %d: fdin is stdin\n",stage);
                         }
                         fdin = 0;
                     }
@@ -134,7 +134,7 @@ int main(int argc, char const *argv[]) {
                     else{
                         fdin = prepipe[1];
                         if(DEBUG){
-                            printf("Stage %d: fdin is pipe(%d)",
+                            printf("Stage %d: fdin is pipe(%d)\n",
                             stage, prepipe[1]);
                         }
                     }
@@ -146,7 +146,7 @@ int main(int argc, char const *argv[]) {
                         exit(EXIT_FAILURE);
                     }
                     if(DEBUG){
-                        printf("Stage %d: fdin is %s",
+                        printf("Stage %d: fdin is %s\n",
                         stage, curStage->inname);
                     }
                 }
@@ -171,7 +171,7 @@ int main(int argc, char const *argv[]) {
                     if(stage < ((pipeln->length)-1)){
                         fdout = 1;
                         if(DEBUG){
-                            printf("Stage %d: fdin is stdout",
+                            printf("Stage %d: fdout is stdout\n",
                             stage);
                         }
                     }
@@ -179,7 +179,7 @@ int main(int argc, char const *argv[]) {
                     else{
                         fdout = postpipe[0];
                         if(DEBUG){
-                            printf("Stage %d: fdin is postpipe(%d)",
+                            printf("Stage %d: fdin is postpipe(%d)\n",
                             stage, postpipe[0]);
                         }
                     }
@@ -191,7 +191,7 @@ int main(int argc, char const *argv[]) {
                         exit(EXIT_FAILURE);
                     }
                     if(DEBUG){
-                        printf("Stage %d: fdin is %s",
+                        printf("Stage %d: fdin is %s\n",
                         stage, curStage->outname);
                     }
                 }
