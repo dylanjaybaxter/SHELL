@@ -63,8 +63,8 @@ int main(int argc, char const *argv[]) {
     sa.sa_flags = 0;
     sigaction(SIGINT, &sa, NULL);
 
-    sigemptyset(procMask);
-    sigaddset(&procMask);
+    sigemptyset(&procMask);
+    sigaddset(&procMask, SIGINT);
     sigprocmask(SIG_BLOCK, &procMask, NULL);
 
     if(DEBUG){
