@@ -25,7 +25,7 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 1
+#define DEBUG 0
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
@@ -119,7 +119,6 @@ int main(int argc, char const *argv[]) {
                 }
                 if(-1 == chdir(pipeln->stage->argv[1])){
                     perror("chdir");
-                    exit(EXIT_FAILURE);
                 }
                 if(NULL == getcwd(pwd, PATH_MAX)){
                     perror("PWD");
@@ -278,7 +277,7 @@ int main(int argc, char const *argv[]) {
 
                     /*Execute order 66*/
                     if(-1 == execvp(curStage->argv[0], curStage->argv)){
-                        perror("Execvp");
+                        perror(curStage->argv[0]);
                     }
                     return -1;
                 }
