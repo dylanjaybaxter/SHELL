@@ -237,7 +237,7 @@ int main(int argc, char const *argv[]) {
                 dup2(fdout, 1);
 
                 if(DEBUG){
-                    printf("Closing %d %d %d %d",
+                    printf("Closing %d %d %d %d\n",
                     prepipe[0],prepipe[1],postpipe[0],postpipe[1]);
                 }
                 /*Close pipes*/
@@ -256,7 +256,7 @@ int main(int argc, char const *argv[]) {
             else{
                 /*Close Remaining Pipe*/
                 if(DEBUG){
-                    printf("Closing %d %d",
+                    printf("Closing %d %d\n",
                     prepipe[0],prepipe[1]);
                 }
                 close(prepipe[0]);
