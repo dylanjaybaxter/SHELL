@@ -119,7 +119,7 @@ int main(int argc, char const *argv[]) {
         else{
             /*Set the current stage*/
             stage = 0;
-            curStage = curStage->next;
+            curStage = (clstage)pipeln->stage;
             while(curStage != NULL){
                 /*Set fdin*/
                 /*If input is null*/
@@ -187,7 +187,7 @@ int main(int argc, char const *argv[]) {
 
                 /*Move to next stage*/
                 stage = stage + 1;
-                curStage = curStage->next;
+                curStage = (clstage)curStage->next;
                 if(curStage != NULL){
                     printf("Should move to next stage\n");
                 }else{
