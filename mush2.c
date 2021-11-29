@@ -38,6 +38,7 @@ int main(int argc, char const *argv[]) {
     /*Define Variables*/
     int fdin = 0;
     int fdout = 1;
+    int readFromFile = 0;
     FILE* fptr;
     char* line;
     char pwd[PATH_MAX];
@@ -65,7 +66,7 @@ int main(int argc, char const *argv[]) {
 
     sigemptyset(&procMask);
     sigaddset(&procMask, SIGINT);
-    sigprocmask(SIG_BLOCK, &procMask, NULL);
+    /*sigprocmask(SIG_BLOCK, &procMask, NULL);*/
 
     if(DEBUG){
         printf("Args: %d", argc);
@@ -83,6 +84,7 @@ int main(int argc, char const *argv[]) {
             perror(argv[1]);
             exit(EXIT_FAILURE);
         }
+        readFromFile = 1;
     }
     else{
         printf("Usage error");
@@ -94,7 +96,9 @@ int main(int argc, char const *argv[]) {
         perror("PWD");
         exit(EXIT_FAILURE);
     }
-    printf("/%s:8-P ", pwd);
+    if(!readFromFile){
+        printf("/%s:8-P ", pwd);
+    }
 
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
@@ -118,7 +122,7 @@ int main(int argc, char const *argv[]) {
                     printf("cd detected...\n");
                 }
                 if(-1 == chdir(pipeln->stage->argv[1])){
-                    perror("chdir");
+                    perror(pipeln->stage->argv[1]);
                 }
                 if(NULL == getcwd(pwd, PATH_MAX)){
                     perror("PWD");
@@ -309,9 +313,11 @@ int main(int argc, char const *argv[]) {
                 }
             }
         }
-                /*Re-print the marker*/
-                printf("/%s:8-P ", pwd);
-                fflush(stdout);
+        /*Re-print the marker*/
+        if(!readFromFile){
+            printf("/%s:8-P ", pwd);
+        }
+        fflush(stdout);
     }
     yylex_destroy();
     return 0;
