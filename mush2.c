@@ -247,7 +247,7 @@ int main(int argc, char const *argv[]) {
                     close(prepipe[READ_END]);
                     close(prepipe[WRITE_END]);
                 }
-                if(stage != (pipeln->length -1)){
+                if((stage != (pipeln->length -1))&&(stage != 0)){
                     if(DEBUG){
                         printf("Closing %d %d\n",
                         postpipe[READ_END],postpipe[WRITE_END]);
