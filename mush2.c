@@ -119,7 +119,7 @@ int main(int argc, char const *argv[]) {
         else{
             /*Set the current stage*/
             stage = 0;
-            curStage = (pipeln->stage[stage]);
+            curStage = curStage->next;
             while(curStage != NULL){
                 /*Set fdin*/
                 /*If input is null*/
@@ -142,7 +142,7 @@ int main(int argc, char const *argv[]) {
                 }
 
                 /*If there is another stage, pipe*/
-                if(&(pipeln->stage[stage+1]) != NULL){
+                if(curStage->next != NULL){
                     if(DEBUG){
                         printf("Creating pipe...\n");
                     }
@@ -155,7 +155,7 @@ int main(int argc, char const *argv[]) {
                 /*Set fdout*/
                 if(curStage->outname == NULL){
                     /*If first stage, set to stdin*/
-                    if(&(pipeln->stage[stage+1]) == NULL){
+                    if(curStage->next == NULL){
                         fdout = 0;
                     }
                     /*If else set to pipe value*/
@@ -187,7 +187,7 @@ int main(int argc, char const *argv[]) {
 
                 /*Move to next stage*/
                 stage = stage + 1;
-                curStage = (pipeln->stage[stage]);
+                curStage = curStage->next;
                 if(curStage != NULL){
                     printf("Should move to next stage\n");
                 }else{
