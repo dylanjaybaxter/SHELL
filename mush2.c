@@ -272,7 +272,7 @@ int main(int argc, char const *argv[]) {
                     printf("Closing %d %d\n",
                     prepipe[WRITE_END],prepipe[READ_END]);
                 }
-                close(prepipe[READ_END]);
+                /*close(prepipe[READ_END]);
                 close(prepipe[WRITE_END]);
 
                 /*Wait for all children to exit*/
