@@ -54,13 +54,18 @@ int main(int argc, char const *argv[]) {
     int numProc;
     int childStat;
     int pid;
+    sigset_t procMask;
 
-    /*Setup interrupt handler*/
+    /*Setup interrupt handler OR Block signal*/
     struct sigaction sa;
     sa.sa_handler = handler;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
     sigaction(SIGINT, &sa, NULL);
+
+    sigemptyset(procMask);
+    sigaddset(&procMask);
+    sigprocmask(SIG_BLOCK, &procMask, NULL);
 
     if(DEBUG){
         printf("Args: %d", argc);
@@ -89,7 +94,7 @@ int main(int argc, char const *argv[]) {
         perror("PWD");
         exit(EXIT_FAILURE);
     }
-    printf("%s:8-P ", pwd);
+    printf("/%s:8-P ", pwd);
 
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
@@ -236,6 +241,9 @@ int main(int argc, char const *argv[]) {
 
             /*If exit as child*/
             if(forkVal == CHILD){
+                /*Unblock SIGINT*/
+                sigprocmask(SIG_UNBLOCK, &procMask, NULL);
+
                 /*Hook up file descriptors*/
                 if(DEBUG){
                     printf("Assigning %d to %d\n", fdin, 0);
@@ -279,21 +287,23 @@ int main(int argc, char const *argv[]) {
                     if(-1 == (pid = wait(&childStat))){
                         perror("Wait failed");
                         exit(EXIT_FAILURE);
-                    }
-                    if(DEBUG){
-                        if(childStat){
-                            printf(
-                            "Process %d exited with an error value.\n", pid);
+                    }else{
+                        if(DEBUG){
+                            if(childStat){
+                                printf(
+                                "Process %d exited with an error value.\n",
+                                pid);
+                            }
+                            else{
+                                printf("Process %d suceeded.\n", pid);
+                            }
                         }
-                        else{
-                            printf("Process %d suceeded.\n", pid);
-                        }
+                        fflush(stdout);
+                        numProc--;
                     }
-                    fflush(stdout);
-                    numProc--;
                 }
                 /*Re-print the marker*/
-                printf("%s:8-P ", pwd);
+                printf("/%s:8-P ", pwd);
                 fflush(stdout);
             }
 
@@ -305,7 +315,6 @@ int main(int argc, char const *argv[]) {
 
 void handler(int signal){
     if(DEBUG){
-        printf("Child process exiting\n");
+        printf("\n");
     }
-    exit(SIGINT);
 }
