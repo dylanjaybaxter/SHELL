@@ -45,7 +45,6 @@ int main(int argc, char const *argv[]) {
     clstage curStage;
     int postpipe[2];
     int prepipe[2];
-    int stageOneFlag;
     int stage = 0;
 
     /*Forking Vars*/
@@ -125,7 +124,7 @@ int main(int argc, char const *argv[]) {
                 /*If input is null*/
                 if(curStage->inname == NULL){
                     /*If first stage, set to stdin*/
-                    if(stageOneFlag){
+                    if(stage == 0){
                         fdin = 0;
                     }
                     /*If else set to pipe value*/
@@ -142,7 +141,7 @@ int main(int argc, char const *argv[]) {
                 }
 
                 /*If there is another stage, pipe*/
-                if(curStage->next != NULL){
+                if(stage < ((pipeln->length)-1)){
                     if(DEBUG){
                         printf("Creating pipe...\n");
                     }
@@ -155,7 +154,7 @@ int main(int argc, char const *argv[]) {
                 /*Set fdout*/
                 if(curStage->outname == NULL){
                     /*If first stage, set to stdin*/
-                    if(curStage->next == NULL){
+                    if(stage < ((pipeln->length)-1)){
                         fdout = 0;
                     }
                     /*If else set to pipe value*/
@@ -193,11 +192,9 @@ int main(int argc, char const *argv[]) {
                 }else{
                     printf("Last stage\n");
                 }
-                if(!stageOneFlag){
+                if(stage > 0){
                     close(prepipe[0]);
                     close(prepipe[1]);
-                }else{
-                    stageOneFlag = 0;
                 }
                 prepipe[0] = postpipe[0];
                 prepipe[1] = postpipe[1];
