@@ -203,7 +203,7 @@ int main(int argc, char const *argv[]) {
                 }
                 if(forkVal == CHILD){
                     if(DEBUG){
-                        printf("Child Created...\n");
+                        printf("Child Created [%d %d]\n", fdin, fdout);
                     }
                     break;
                 }
