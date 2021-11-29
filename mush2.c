@@ -246,18 +246,22 @@ int main(int argc, char const *argv[]) {
 
 
                 /*Close pipes*/
-                if(DEBUG){
-                    printf("Closing %d %d\n",
-                    prepipe[READ_END],prepipe[WRITE_END]);
+                if(stage > 0){
+                    if(DEBUG){
+                        printf("Closing %d %d\n",
+                        prepipe[READ_END],prepipe[WRITE_END]);
+                    }
+                    close(prepipe[READ_END]);
+                    close(prepipe[WRITE_END]);
                 }
-                close(prepipe[READ_END]);
-                close(prepipe[WRITE_END]);
-                if(DEBUG){
-                    printf("Closing %d %d\n",
-                    postpipe[READ_END],postpipe[WRITE_END]);
+                if((stage > 0) &&(stage < (pipeln->length-1))){
+                    if(DEBUG){
+                        printf("Closing %d %d\n",
+                        postpipe[READ_END],postpipe[WRITE_END]);
+                    }
+                    close(postpipe[READ_END]);
+                    close(postpipe[WRITE_END]);
                 }
-                close(postpipe[READ_END]);
-                close(postpipe[WRITE_END]);
 
                 /*Execute order 66*/
                 if(-1 == execvp(curStage->argv[0], curStage->argv)){
@@ -267,14 +271,6 @@ int main(int argc, char const *argv[]) {
             }
             /*If exit as parent*/
             else{
-                /*Close Remaining Pipe*/
-                if(DEBUG){
-                    printf("Closing %d %d\n",
-                    prepipe[WRITE_END],prepipe[READ_END]);
-                }
-                /*close(prepipe[READ_END]);
-                close(prepipe[WRITE_END]);
-
                 /*Wait for all children to exit*/
                 if(DEBUG){
                     printf("Waiting for %d procs\n", numProc);
