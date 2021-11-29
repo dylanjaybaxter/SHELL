@@ -28,6 +28,8 @@ Description: This file contains a the main functionality for a limited shell
 #define DEBUG 1
 #define PARENT 1
 #define CHILD 0
+#define READ_END 0
+#define WRITE_END 1
 
 /*Prototypes*/
 void handler(int signal);
@@ -132,10 +134,10 @@ int main(int argc, char const *argv[]) {
                     }
                     /*If else set to pipe value*/
                     else{
-                        fdin = prepipe[1];
+                        fdin = prepipe[READ_END];
                         if(DEBUG){
                             printf("Stage %d: fdin is pipe(%d)\n",
-                            stage, prepipe[1]);
+                            stage, prepipe[READ_END]);
                         }
                     }
                 }/*If input is named, open file*/
@@ -161,7 +163,7 @@ int main(int argc, char const *argv[]) {
                     }
                     if(DEBUG){
                         printf("Created pipe [%d %d]...\n",
-                        postpipe[0], postpipe[1]);
+                        postpipe[READ_END], postpipe[WRITE_END]);
                     }
                 }
 
@@ -177,10 +179,10 @@ int main(int argc, char const *argv[]) {
                     }
                     /*If else set to pipe value*/
                     else{
-                        fdout = postpipe[0];
+                        fdout = postpipe[WRITE_END];
                         if(DEBUG){
                             printf("Stage %d: fdout is postpipe(%d)\n",
-                            stage, postpipe[0]);
+                            stage, postpipe[WRITE_END]);
                         }
                     }
                 }/*If output is named, open file*/
@@ -219,11 +221,11 @@ int main(int argc, char const *argv[]) {
                     printf("Last stage\n");
                 }
                 if(stage > 0){
-                    close(prepipe[0]);
-                    close(prepipe[1]);
+                    close(prepipe[WRITE_END]);
+                    close(prepipe[READ_END]);
                 }
-                prepipe[0] = postpipe[0];
-                prepipe[1] = postpipe[1];
+                prepipe[WRITE_END] = postpipe[WRITE_END];
+                prepipe[READ_END] = postpipe[READ_END];
             }
 
             /*If exit as child*/
@@ -238,13 +240,14 @@ int main(int argc, char const *argv[]) {
 
                 if(DEBUG){
                     printf("Closing %d %d %d %d\n",
-                    prepipe[0],prepipe[1],postpipe[0],postpipe[1]);
+                    prepipe[READ_END],prepipe[WRITE_END],
+                    postpipe[READ_END],postpipe[WRITE_END]);
                 }
                 /*Close pipes*/
-                /*close(prepipe[0]);
-                close(prepipe[1]);
-                close(postpipe[0]);
-                close(postpipe[1]);*/
+                close(prepipe[READ_END]);
+                close(prepipe[WRITE_END]);
+                close(postpipe[READ_END]);
+                close(postpipe[WRITE_END]);
 
                 /*Execute order 66*/
                 if(-1 == execvp(curStage->argv[0], curStage->argv)){
@@ -257,10 +260,10 @@ int main(int argc, char const *argv[]) {
                 /*Close Remaining Pipe*/
                 if(DEBUG){
                     printf("Closing %d %d\n",
-                    prepipe[0],prepipe[1]);
+                    prepipe[WRITE_END],prepipe[READ_END]);
                 }
-                close(prepipe[0]);
-                close(prepipe[1]);
+                close(prepipe[READ_END]);
+                close(prepipe[WRITE_END]);
 
                 /*Wait for all children to exit*/
                 if(DEBUG){
