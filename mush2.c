@@ -158,8 +158,8 @@ int main(int argc, char const *argv[]) {
                             exit(EXIT_FAILURE);
                         }
                         if(DEBUG){
-                            printf("Stage %d: fdin is %s\n",
-                            stage, curStage->inname);
+                            printf("Stage %d: fdin is %s(%d)\n",
+                            stage, curStage->inname, fdin);
                         }
                     }
 
@@ -196,14 +196,14 @@ int main(int argc, char const *argv[]) {
                         }
                     }/*If output is named, open file*/
                     else{
-                        if(-1 == (fdin = open(curStage->outname,
+                        if(-1 == (fdout = open(curStage->outname,
                             O_WRONLY|O_CREAT|O_TRUNC, 0666))){
                             perror(curStage->outname);
                             exit(EXIT_FAILURE);
                         }
                         if(DEBUG){
-                            printf("Stage %d: fdin is %s\n",
-                            stage, curStage->outname);
+                            printf("Stage %d: fdout is %s(%d)\n",
+                            stage, curStage->outname, fdin);
                         }
                     }
 
