@@ -168,7 +168,7 @@ int main(int argc, char const *argv[]) {
                 /*Set fdout*/
                 if(curStage->outname == NULL){
                     /*If first stage, set to stdin*/
-                    if(stage < ((pipeln->length)-1)){
+                    if(stage == ((pipeln->length)-1)){
                         fdout = 1;
                         if(DEBUG){
                             printf("Stage %d: fdout is stdout\n",
