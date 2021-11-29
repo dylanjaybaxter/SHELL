@@ -214,10 +214,12 @@ int main(int argc, char const *argv[]) {
                 /*Move to next stage*/
                 stage = stage + 1;
                 curStage = (clstage)&(pipeln->stage[stage]);
-                if(stage<(pipeln->length)){
-                    printf("Should move to next stage\n");
-                }else{
-                    printf("Last stage\n");
+                if(DEBUG){
+                    if(stage<(pipeln->length)){
+                        printf("Should move to next stage\n");
+                    }else{
+                        printf("Last stage\n");
+                    }
                 }
                 if(stage > 1){
                     if(DEBUG){
@@ -282,11 +284,14 @@ int main(int argc, char const *argv[]) {
                         perror("Wait failed");
                         exit(EXIT_FAILURE);
                     }
-                    if(childStat){
-                        printf("Process %d exited with an error value.\n", pid);
-                    }
-                    else{
-                        printf("Process %d suceeded.\n", pid);
+                    if(DEBUG){
+                        if(childStat){
+                            printf(
+                            "Process %d exited with an error value.\n", pid);
+                        }
+                        else{
+                            printf("Process %d suceeded.\n", pid);
+                        }
                     }
                     fflush(stdout);
                     numProc--;
