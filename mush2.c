@@ -158,7 +158,7 @@ int main(int argc, char const *argv[]) {
                         if(-1 == (fdin = open(curStage->inname,
                             O_RDONLY, 0666))){
                             perror(curStage->inname);
-                            exit(EXIT_FAILURE);
+                            break;
                         }
                         if(DEBUG){
                             printf("Stage %d: fdin is %s(%d)\n",
@@ -202,7 +202,9 @@ int main(int argc, char const *argv[]) {
                         if(-1 == (fdout = open(curStage->outname,
                             O_WRONLY|O_CREAT|O_TRUNC, 0666))){
                             perror(curStage->outname);
-                            exit(EXIT_FAILURE);
+                            close(prepipe[WRITE_END]);
+                            close(prepipe[READ_END]);
+                            break;
                         }
                         if(DEBUG){
                             printf("Stage %d: fdout is %s(%d)\n",
