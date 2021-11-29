@@ -179,7 +179,7 @@ int main(int argc, char const *argv[]) {
                     else{
                         fdout = postpipe[0];
                         if(DEBUG){
-                            printf("Stage %d: fdin is postpipe(%d)\n",
+                            printf("Stage %d: fdout is postpipe(%d)\n",
                             stage, postpipe[0]);
                         }
                     }
@@ -241,10 +241,10 @@ int main(int argc, char const *argv[]) {
                     prepipe[0],prepipe[1],postpipe[0],postpipe[1]);
                 }
                 /*Close pipes*/
-                close(prepipe[0]);
+                /*close(prepipe[0]);
                 close(prepipe[1]);
                 close(postpipe[0]);
-                close(postpipe[1]);
+                close(postpipe[1]);*/
 
                 /*Execute order 66*/
                 if(-1 == execvp(curStage->argv[0], curStage->argv)){
