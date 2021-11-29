@@ -25,7 +25,7 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 1
+#define DEBUG 0
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
@@ -89,7 +89,7 @@ int main(int argc, char const *argv[]) {
         perror("PWD");
         exit(EXIT_FAILURE);
     }
-    printf("%s:-P ", pwd);
+    printf("%s:8-P ", pwd);
 
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
@@ -221,7 +221,7 @@ int main(int argc, char const *argv[]) {
                 }
                 if(stage > 1){
                     if(DEBUG){
-                        printf("Parent closing %d and %d",
+                        printf("Parent closing %d and %d\n",
                         prepipe[WRITE_END],
                         prepipe[READ_END]);
                     }
@@ -292,7 +292,7 @@ int main(int argc, char const *argv[]) {
                     numProc--;
                 }
                 /*Re-print the marker*/
-                printf("%s:-P ", pwd);
+                printf("%s:8-P ", pwd);
                 fflush(stdout);
             }
 
