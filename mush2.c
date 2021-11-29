@@ -229,9 +229,17 @@ int main(int argc, char const *argv[]) {
             /*If exit as child*/
             if(forkVal == CHILD){
                 /*Hook up file descriptors*/
+                if(DEBUG){
+                    printf("Assigning %d to %d\n", fdin, 0);
+                    printf("Assigning %d to %d\n", fdout, 1);
+                }
                 dup2(fdin, 0);
                 dup2(fdout, 1);
 
+                if(DEBUG){
+                    printf("Closing %d %d %d %d",
+                    prepipe[0],prepipe[1],postpipe[0],postpipe[1]);
+                }
                 /*Close pipes*/
                 close(prepipe[0]);
                 close(prepipe[1]);
@@ -247,6 +255,10 @@ int main(int argc, char const *argv[]) {
             /*If exit as parent*/
             else{
                 /*Close Remaining Pipe*/
+                if(DEBUG){
+                    printf("Closing %d %d",
+                    prepipe[0],prepipe[1]);
+                }
                 close(prepipe[0]);
                 close(prepipe[1]);
 
