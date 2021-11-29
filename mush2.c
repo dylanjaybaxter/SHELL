@@ -25,7 +25,7 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 0
+#define DEBUG 1
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
