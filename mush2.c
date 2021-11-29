@@ -156,7 +156,6 @@ int main(int argc, char const *argv[]) {
 
                 /*If there is another stage, pipe*/
                 if(stage < ((pipeln->length)-1)){
-
                     if(-1 == pipe(postpipe)){
                         perror("Piping");
                         exit(EXIT_FAILURE);
@@ -215,7 +214,7 @@ int main(int argc, char const *argv[]) {
                 /*Move to next stage*/
                 stage = stage + 1;
                 curStage = (clstage)&(pipeln->stage[stage]);
-                if(curStage != NULL){
+                if(stage<(pipeln->length)){
                     printf("Should move to next stage\n");
                 }else{
                     printf("Last stage\n");
@@ -238,16 +237,24 @@ int main(int argc, char const *argv[]) {
                 dup2(fdin, 0);
                 dup2(fdout, 1);
 
-                if(DEBUG){
-                    printf("Closing %d %d %d %d\n",
-                    prepipe[READ_END],prepipe[WRITE_END],
-                    postpipe[READ_END],postpipe[WRITE_END]);
-                }
+
                 /*Close pipes*/
-                close(prepipe[READ_END]);
-                close(prepipe[WRITE_END]);
-                close(postpipe[READ_END]);
-                close(postpipe[WRITE_END]);
+                if(stage != 0){
+                    if(DEBUG){
+                        printf("Closing %d %d\n",
+                        prepipe[READ_END],prepipe[WRITE_END],);
+                    }
+                    close(prepipe[READ_END]);
+                    close(prepipe[WRITE_END]);
+                }
+                if(stage != (pipeln->length -1)){
+                    if(DEBUG){
+                        printf("Closing %d %d\n",,
+                        postpipe[READ_END],postpipe[WRITE_END]);
+                    }
+                    close(postpipe[READ_END]);
+                    close(postpipe[WRITE_END]);
+                }
 
                 /*Execute order 66*/
                 if(-1 == execvp(curStage->argv[0], curStage->argv)){
