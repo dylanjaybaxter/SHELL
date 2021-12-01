@@ -25,7 +25,7 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 0
+#define DEBUG 1
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
@@ -142,8 +142,11 @@ int main(int argc, char const *argv[]) {
                 if(DEBUG){
                     printf("cd detected...\n");
                 }
-                if((pipeln->stage->argv[1] == NULL) &&
+                if((pipeln->stage->argv[1] == NULL) ||
                 !(strcmp(pipeln->stage->argv[1],"~\0"))){
+                    if(DEBUG){
+                        printf("HOME: %s\n",getenv("HOME"));
+                    }
                     if(-1 == chdir(getenv("HOME"))){
                         perror(getenv("HOME"));
                     }
