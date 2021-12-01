@@ -25,7 +25,7 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 1
+#define DEBUG 0
 #define CWD 0
 #define PARENT 1
 #define CHILD 0
@@ -335,9 +335,9 @@ int main(int argc, char const *argv[]) {
                     }
                     while(numProc > 0){
                         if(-1 == (pid = wait(&childStat))){
-                            if(childStat == SIGINT ||
+                            if(WSTOPSIG(childStat) == SIGINT ||
                             childStat == 0){
-                                /*Do Nothing if exited normally*/
+                                /*Keep Waiting*/
                             }else{
                                 if(DEBUG){
                                     printf("stat %d is not sigint %d\n",
