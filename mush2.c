@@ -103,6 +103,9 @@ int main(int argc, char const *argv[]) {
     /*Read fd line by line until EOF(^D)*/
     while((line = readLongString(fptr)) != NULL){
         /*Parse line to get command info*/
+        if(DEBUG){
+            printf("CREATING PIPELINE\n");
+        }
         if(NULL == (pipeln = (pipeline)crack_pipeline(line))){
             if(DEBUG){
                 printf("INVALID COMMAND\n");
