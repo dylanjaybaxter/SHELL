@@ -26,7 +26,7 @@ Description: This file contains a the main functionality for a limited shell
 
 /*Macros*/
 #define DEBUG 0
-#define CWD 1
+#define CWD 0
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
@@ -335,8 +335,12 @@ int main(int argc, char const *argv[]) {
                     }
                     while(numProc > 0){
                         if(-1 == (pid = wait(&childStat))){
-                            perror("Wait failed");
-                            break;
+                            if(childStat == SIGINT){
+                                /*Do Nothing*/
+                            }else{
+                                perror("Wait failed");
+                                exit(EXIT_FAILURE);
+                            }
                         }else{
                             if(DEBUG){
                                 if(childStat){
