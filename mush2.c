@@ -142,8 +142,15 @@ int main(int argc, char const *argv[]) {
                 if(DEBUG){
                     printf("cd detected...\n");
                 }
-                if(-1 == chdir(pipeln->stage->argv[1])){
-                    perror(pipeln->stage->argv[1]);
+                if((pipeln->stage->argv[1] == NULL) &&
+                !(strcmp(pipeln->stage->argv[1],"~\0"))){
+                    if(-1 == chdir(getenv("HOME"))){
+                        perror(getenv("HOME"));
+                    }
+                }else{
+                    if(-1 == chdir(pipeln->stage->argv[1])){
+                        perror(pipeln->stage->argv[1]);
+                    }
                 }
                 if(NULL == getcwd(pwd, PATH_MAX)){
                     perror("PWD");
