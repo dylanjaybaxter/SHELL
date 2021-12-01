@@ -338,6 +338,8 @@ int main(int argc, char const *argv[]) {
                             if(childStat == SIGINT){
                                 /*Do Nothing*/
                             }else{
+                                printf("stat %d is not sigint %d\n",
+                                 childStat, SIGINT);
                                 perror("Wait failed");
                                 exit(EXIT_FAILURE);
                             }
