@@ -119,7 +119,7 @@ int main(int argc, char const *argv[]) {
         user, computer, pwd);
     }
     else if(!readFromFile){
-        printf("8-P ",user, computer, pwd);
+        printf("8-P ");
     }
 
     /*Read fd line by line until EOF(^D)*/
@@ -364,7 +364,7 @@ int main(int argc, char const *argv[]) {
             user, computer, pwd);
         }
         else if(!readFromFile){
-            printf("8-P ",user, computer, pwd);
+            printf("8-P ");
         }
 
         fflush(stdout);
