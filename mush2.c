@@ -296,7 +296,7 @@ int main(int argc, char const *argv[]) {
                     return -1;
                 }
                 /*If exit as parent*/
-                else if(forkVal == PARENT){
+                else if(forkVal){
                     /*Wait for all children to exit*/
                     if(DEBUG){
                         printf("Waiting for %d procs\n", numProc);
