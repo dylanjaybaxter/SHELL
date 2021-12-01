@@ -39,23 +39,23 @@ int main(int argc, char const *argv[]) {
     int fdin = 0;
     int fdout = 1;
     int readFromFile = 0;
-    FILE* fptr;
-    char* line;
+    FILE* fptr = NULL;
+    char* line = NULL;
     char pwd[PATH_MAX];
 
     /*Pipeline vars*/
-    pipeline pipeln;
-    clstage curStage;
+    pipeline pipeln = NULL;
+    clstage curStage = NULL;
     int postpipe[2];
     int prepipe[2];
     int stage = 0;
 
     /*Forking Vars*/
-    int forkVal;
-    int numProc;
-    int childStat;
-    int pid;
-    sigset_t procMask;
+    int forkVal = 1;
+    int numProc = 0;
+    int childStat = 0;
+    int pid = 0;
+    sigset_t procMask = 0;
 
     /*Setup interrupt handler OR Block signal*/
     struct sigaction sa;
