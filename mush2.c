@@ -107,7 +107,10 @@ int main(int argc, char const *argv[]) {
             if(DEBUG){
                 printf("INVALID COMMAND\n");
             }
-        }else{
+        }
+        /*Free line*/
+        free(line);
+        else{
             if(pipeln->length == 0){
                 printf("What the hell\n -David Lynch\n");
             }
@@ -324,6 +327,8 @@ int main(int argc, char const *argv[]) {
             printf("/%s:8-P ", pwd);
         }
         fflush(stdout);
+        /*Free line*/
+        free_pipeline(pipeln);
     }
     yylex_destroy();
     return 0;
