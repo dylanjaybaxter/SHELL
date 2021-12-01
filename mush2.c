@@ -112,10 +112,6 @@ int main(int argc, char const *argv[]) {
             }
         }
         else{
-            free_pipeline(pipeln);
-            free(line);
-            fclose(fptr);
-            return 0;
             if(pipeln->length == 0){
                 printf("What the hell\n -David Lynch\n");
             }
