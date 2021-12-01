@@ -25,7 +25,7 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 1
+#define DEBUG 0
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
@@ -69,7 +69,7 @@ int main(int argc, char const *argv[]) {
     /*sigprocmask(SIG_BLOCK, &procMask, NULL);*/
 
     if(DEBUG){
-        printf("Args: %d", argc);
+        printf("Args: %d\n", argc);
     }
 
     /*If 1 arg*/
@@ -323,12 +323,12 @@ int main(int argc, char const *argv[]) {
                 }
             }
         }
+        if(DEBUG){
+            printf("FREEING ELEMENTS\n");
+        }
         /*Re-print the marker*/
         if(!readFromFile){
             printf("/%s:8-P ", pwd);
-        }
-        if(DEBUG){
-            printf("FREEING ELEMENTS\n");
         }
         fflush(stdout);
         /*Free line*/
