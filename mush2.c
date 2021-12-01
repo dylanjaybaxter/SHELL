@@ -339,8 +339,10 @@ int main(int argc, char const *argv[]) {
                             childStat == 0){
                                 /*Do Nothing if exited normally*/
                             }else{
-                                printf("stat %d is not sigint %d\n",
-                                 childStat, SIGINT);
+                                if(DEBUG){
+                                    printf("stat %d is not sigint %d\n",
+                                    childStat, SIGINT);
+                                }
                                 perror("Wait failed");
                                 exit(EXIT_FAILURE);
                             }
