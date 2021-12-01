@@ -335,8 +335,9 @@ int main(int argc, char const *argv[]) {
                     }
                     while(numProc > 0){
                         if(-1 == (pid = wait(&childStat))){
-                            if(childStat == SIGINT){
-                                /*Do Nothing*/
+                            if(childStat == SIGINT ||
+                            childStat == 0){
+                                /*Do Nothing if exited normally*/
                             }else{
                                 printf("stat %d is not sigint %d\n",
                                  childStat, SIGINT);
