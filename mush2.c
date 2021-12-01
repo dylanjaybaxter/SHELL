@@ -324,6 +324,9 @@ int main(int argc, char const *argv[]) {
         if(!readFromFile){
             printf("/%s:8-P ", pwd);
         }
+        if(DEBUG){
+            printf("FREEING ELEMENTS\n");
+        }
         fflush(stdout);
         /*Free line*/
         free_pipeline(pipeln);
