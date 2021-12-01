@@ -25,7 +25,8 @@ Description: This file contains a the main functionality for a limited shell
 #include "mush.h"
 
 /*Macros*/
-#define DEBUG 1
+#define DEBUG 0
+#define CWD 1
 #define PARENT 1
 #define CHILD 0
 #define READ_END 0
@@ -113,8 +114,12 @@ int main(int argc, char const *argv[]) {
         perror("PWD");
         exit(EXIT_FAILURE);
     }
-    if(!readFromFile){
-        printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",user, computer, pwd);
+    if(!readFromFile && CWD){
+        printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",
+        user, computer, pwd);
+    }
+    else if(!readFromFile){
+        printf("8-P ",user, computer, pwd);
     }
 
     /*Read fd line by line until EOF(^D)*/
@@ -331,7 +336,7 @@ int main(int argc, char const *argv[]) {
                     while(numProc > 0){
                         if(-1 == (pid = wait(&childStat))){
                             perror("Wait failed");
-                            exit(EXIT_FAILURE);
+                            break;
                         }else{
                             if(DEBUG){
                                 if(childStat){
@@ -354,9 +359,14 @@ int main(int argc, char const *argv[]) {
             printf("FREEING ELEMENTS\n");
         }
         /*Re-print the marker*/
-        if(!readFromFile){
-            printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",user, computer, pwd);
+        if(!readFromFile && CWD){
+            printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",
+            user, computer, pwd);
         }
+        else if(!readFromFile){
+            printf("8-P ",user, computer, pwd);
+        }
+
         fflush(stdout);
         /*Free line*/
         free_pipeline(pipeln);

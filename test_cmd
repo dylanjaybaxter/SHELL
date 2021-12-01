@@ -1,2 +1,4 @@
 ls
 ls | sort > out
+/bin/echo -n Hello
+echo world
