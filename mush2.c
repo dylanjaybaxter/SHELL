@@ -350,8 +350,8 @@ int main(int argc, char const *argv[]) {
                             if(DEBUG){
                                 if(childStat){
                                     printf(
-                                    "Process %d exited with an error value.\n",
-                                    pid);
+                                    "Process %d exited with an error %d.\n",
+                                    pid, childStat);
                                 }
                                 else{
                                     printf("Process %d suceeded.\n", pid);
