@@ -114,7 +114,7 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
     if(!readFromFile){
-        printf(GRN"%s@%s" RST ":" BLU"%s" RST " 8-P ",user, computer, pwd);
+        printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",user, computer, pwd);
     }
 
     /*Read fd line by line until EOF(^D)*/
@@ -345,7 +345,7 @@ int main(int argc, char const *argv[]) {
         }
         /*Re-print the marker*/
         if(!readFromFile){
-            printf(GRN"%s@%s" RST ":" BLU"%s" RST " 8-P ",user, computer, pwd);
+            printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",user, computer, pwd);
         }
         fflush(stdout);
         /*Free line*/
