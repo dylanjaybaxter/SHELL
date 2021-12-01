@@ -31,6 +31,11 @@ Description: This file contains a the main functionality for a limited shell
 #define READ_END 0
 #define WRITE_END 1
 
+/*Shell Colors*/
+#define BLU "\x1b[34m"
+#define GRN "\x1b[32m"
+#define RST "\x1b[0m"
+
 /*Prototypes*/
 void handler(int signal);
 
@@ -57,6 +62,10 @@ int main(int argc, char const *argv[]) {
     int pid = 0;
     sigset_t procMask;
 
+    /*Info*/
+    char user[PATH_MAX] = {0};
+    char computer[PATH_MAX] = {0};
+
     /*Setup interrupt handler OR Block signal*/
     struct sigaction sa;
     sa.sa_handler = handler;
@@ -67,6 +76,14 @@ int main(int argc, char const *argv[]) {
     sigemptyset(&procMask);
     sigaddset(&procMask, SIGINT);
     /*sigprocmask(SIG_BLOCK, &procMask, NULL);*/
+
+    /*Get Device and User Info*/
+    if(-1 == gethostname(computer, PATH_MAX)){
+        perror("Getting Host Name");
+    }
+    if(-1 == getlogin_r(user, PATH_MAX)){
+        perror("Getting Host Name");
+    }
 
     if(DEBUG){
         printf("Args: %d\n", argc);
@@ -97,7 +114,7 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
     if(!readFromFile){
-        printf("/%s:8-P ", pwd);
+        printf(BLU"%s@%s"GRN"/%s:8-P "RST,user, computer, pwd);
     }
 
     /*Read fd line by line until EOF(^D)*/
@@ -328,7 +345,7 @@ int main(int argc, char const *argv[]) {
         }
         /*Re-print the marker*/
         if(!readFromFile){
-            printf("/%s:8-P ", pwd);
+            printf(BLU"%s@%s"GRN"/%s:8-P "RST,user, computer, pwd);
         }
         fflush(stdout);
         /*Free line*/
