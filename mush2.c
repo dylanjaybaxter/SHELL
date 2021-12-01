@@ -55,7 +55,7 @@ int main(int argc, char const *argv[]) {
     int numProc = 0;
     int childStat = 0;
     int pid = 0;
-    sigset_t procMask = 0;
+    sigset_t procMask;
 
     /*Setup interrupt handler OR Block signal*/
     struct sigaction sa;
