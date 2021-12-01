@@ -32,7 +32,7 @@ Description: This file contains a the main functionality for a limited shell
 #define WRITE_END 1
 
 /*Shell Colors*/
-#define BLU "\x1b[34m"
+#define BLU "\x1b[36m"
 #define GRN "\x1b[32m"
 #define RST "\x1b[0m"
 
@@ -114,7 +114,7 @@ int main(int argc, char const *argv[]) {
         exit(EXIT_FAILURE);
     }
     if(!readFromFile){
-        printf(BLU"%s@%s"GRN"/%s:8-P "RST,user, computer, pwd);
+        printf(GRN"%s@%s" RST ":" BLU"%s" RST " 8-P ",user, computer, pwd);
     }
 
     /*Read fd line by line until EOF(^D)*/
@@ -345,7 +345,7 @@ int main(int argc, char const *argv[]) {
         }
         /*Re-print the marker*/
         if(!readFromFile){
-            printf(BLU"%s@%s"GRN"/%s:8-P "RST,user, computer, pwd);
+            printf(GRN"%s@%s" RST ":" BLU"%s" RST " 8-P ",user, computer, pwd);
         }
         fflush(stdout);
         /*Free line*/
