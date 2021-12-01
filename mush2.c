@@ -331,6 +331,12 @@ int main(int argc, char const *argv[]) {
         free(line);
     }
     yylex_destroy();
+    if(readFromFile){
+        if(-1==fclose(fptr)){
+            perror("fclose");
+            exit(EXIT_FAILURE);
+        }
+    }
     return 0;
 }
 
