@@ -406,6 +406,7 @@ int main(int argc, char const *argv[]) {
 
 void handler(int signal){
         reset = 0;
-        printf("\n");
+        signal(SIGINT, handler);
+        printf("\n8-P ");
         fflush(stdout);
 }
