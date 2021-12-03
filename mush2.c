@@ -99,7 +99,7 @@ int main(int argc, char const *argv[]) {
         readFromFile = 1;
     }
     else{
-        printf("Usage error");
+        printf("Usage error: mush2 [input file(optional)]\n");
         exit(EXIT_FAILURE);
     }
 
