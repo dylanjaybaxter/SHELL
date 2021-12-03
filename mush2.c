@@ -108,11 +108,11 @@ int main(int argc, char const *argv[]) {
         perror("PWD");
         exit(EXIT_FAILURE);
     }
-    if(!readFromFile && CWD){
+    if(!readFromFile && (isatty(0)&&isatty(1)) && CWD){
         printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",
         user, computer, pwd);
     }
-    else if(!readFromFile){
+    else if(!readFromFile && (isatty(0)&&isatty(1))){
         printf("8-P ");
     }
 
@@ -370,11 +370,11 @@ int main(int argc, char const *argv[]) {
         free(line);
 
         /*Re-print the marker*/
-        if(!readFromFile && CWD){
+        if(!readFromFile && (isatty(0)&&isatty(1)) && CWD){
             printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",
             user, computer, pwd);
         }
-        else if(!readFromFile && !wrotePrompt){
+        else if(!readFromFile && !wrotePrompt && (isatty(0)&&isatty(1))){
             printf("8-P ");
         }
         /*Flush output*/
@@ -405,7 +405,9 @@ void handler(int sig){
     /*Reset signal handler*/
     signal(SIGINT, handler);
     /*Reprompt*/
-    printf("\n8-P ");
+    if((isatty(0)&&isatty(1))){
+        printf("\n8-P ");
+    }
     /*Signal that prompt has been written*/
     wrotePrompt = 1;
     /*Slush stdout*/
