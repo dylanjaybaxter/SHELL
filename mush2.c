@@ -391,11 +391,13 @@ int main(int argc, char const *argv[]) {
             perror("fclose");
             exit(EXIT_FAILURE);
         }
+    }else{
+        printf("\n");
     }
     if(DEBUG){
         printf("\nExiting Normally");
     }
-    printf("\n");
+
     return 0;
 }
 
