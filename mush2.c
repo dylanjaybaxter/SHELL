@@ -69,15 +69,17 @@ int main(int argc, char const *argv[]) {
     char computer[PATH_MAX] = {0};
 
     /*Setup interrupt handler OR Block signal*/
-    struct sigaction sa;
+    /*struct sigaction sa;
     sa.sa_handler = handler;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
     sigaction(SIGINT, &sa, NULL);
 
     sigemptyset(&procMask);
-    sigaddset(&procMask, SIGINT);
+    sigaddset(&procMask, SIGINT);*/
     /*sigprocmask(SIG_BLOCK, &procMask, NULL);*/
+
+    signal(SIGINT, handler);
 
     /*Get Device and User Info*/
     if(-1 == gethostname(computer, PATH_MAX)){
@@ -403,7 +405,7 @@ int main(int argc, char const *argv[]) {
 }
 
 void handler(int signal){
-        reset = 1;
+        reset = 0;
         printf("\n");
         fflush(stdout);
 }
