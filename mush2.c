@@ -389,6 +389,9 @@ int main(int argc, char const *argv[]) {
             exit(EXIT_FAILURE);
         }
     }
+    if(DEBUG){
+        printf("\nExiting Normally");
+    }
     printf("\n");
     return 0;
 }
