@@ -39,7 +39,7 @@ Description: This file contains a the main functionality for a limited shell
 
 /*Prototypes*/
 int reset = 0;
-void handler(int signal);
+void handler(int sig);
 
 int main(int argc, char const *argv[]) {
     /*Define Variables*/
@@ -404,7 +404,7 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 
-void handler(int signal){
+void handler(int sig){
         reset = 0;
         signal(SIGINT, handler);
         printf("\n8-P ");
