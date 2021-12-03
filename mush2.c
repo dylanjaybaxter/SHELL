@@ -39,6 +39,7 @@ Description: This file contains a the main functionality for a limited shell
 
 /*Prototypes*/
 void handler(int sig);
+int wrotePrompt = 0;
 
 int main(int argc, char const *argv[]) {
     /*Define Variables*/
@@ -379,9 +380,10 @@ int main(int argc, char const *argv[]) {
             printf(GRN"%s@%s" RST ":" BLU"~%s" RST " 8-P ",
             user, computer, pwd);
         }
-        else if(!readFromFile){
+        else if(!readFromFile && !wrotePrompt){
             printf("8-P ");
         }
+        wrotePrompt = 0;
         fflush(stdout);
 
     }
@@ -402,5 +404,6 @@ int main(int argc, char const *argv[]) {
 void handler(int sig){
         signal(SIGINT, handler);
         printf("\n8-P ");
+        wrotePrompt = 1;
         fflush(stdout);
 }
