@@ -1,8 +1,9 @@
 /*
-CPE 357 Lab07
+CPE 357 Asgn6
 Author: Dylan Baxter (dybaxter)
 File: mush2.c
-Description: This file contains a the main functionality for a limited shell
+Description: This file contains a the main
+functionality for a limited shell
 */
 
 /*Includes*/
@@ -68,6 +69,7 @@ int main(int argc, char const *argv[]) {
     char user[PATH_MAX] = {0};
     char computer[PATH_MAX] = {0};
 
+    /*Set the signal handler*/
     signal(SIGINT, handler);
 
     /*Get Device and User Info*/
@@ -114,7 +116,7 @@ int main(int argc, char const *argv[]) {
         printf("8-P ");
     }
 
-    /*Read fd line by line until EOF(^D)*/
+/*---------Read fd line by line until EOF(^D)---------------------*/
     while(((line = readLongString(fptr)) != NULL)){
         /*New line! No prompt!*/
         wrotePrompt = 0;
@@ -135,7 +137,7 @@ int main(int argc, char const *argv[]) {
                 print_pipeline(stdout, pipeln);
             }
 
-            /*Check for cd and run if present*/
+/*-----------Check for cd and run if present-----------------------*/
             if((pipeln->length == 1) &&
             !(strcmp(pipeln->stage->argv[0],"cd\0"))){
                 if(DEBUG){
@@ -159,7 +161,8 @@ int main(int argc, char const *argv[]) {
                     exit(EXIT_FAILURE);
                 }
             }
-            /*Fork child processes to create pipelnline*/
+/*----------------------Set file descriptors, pipe------------------------*/
+/*-------------------------and fork children------------------------------*/
             else{
                 /*Set the current stage*/
                 stage = 0;
@@ -283,7 +286,7 @@ int main(int argc, char const *argv[]) {
                     prepipe[READ_END] = postpipe[READ_END];
                 }
 
-                /*If exit as child*/
+/*----------------------If exit as Child------------------------------*/
                 if(forkVal == CHILD){
                     /*Unblock SIGINT*/
                     sigprocmask(SIG_UNBLOCK, &procMask, NULL);
@@ -321,7 +324,7 @@ int main(int argc, char const *argv[]) {
                     }
                     return -1;
                 }
-                /*If exit as parent*/
+/*----------------------If exit as PARENT------------------------------*/
                 else if(forkVal){
                     /*Wait for all children to exit*/
                     if(DEBUG){
@@ -361,7 +364,7 @@ int main(int argc, char const *argv[]) {
         if(DEBUG){
             printf("FREEING ELEMENTS\n");
         }
-        /*Free line*/
+        /*Free pipeline*/
         free_pipeline(pipeln);
         /*Free line*/
         free(line);
@@ -374,10 +377,15 @@ int main(int argc, char const *argv[]) {
         else if(!readFromFile && !wrotePrompt){
             printf("8-P ");
         }
+        /*Flush output*/
         fflush(stdout);
 
     }
+
+    /*Clean up some remaining memory*/
     yylex_destroy();
+
+    /*Close input file and exit*/
     if(readFromFile){
         if(-1==fclose(fptr)){
             perror("fclose");
@@ -392,8 +400,12 @@ int main(int argc, char const *argv[]) {
 }
 
 void handler(int sig){
-        signal(SIGINT, handler);
-        printf("\n8-P ");
-        wrotePrompt = 1;
-        fflush(stdout);
+    /*Reset signal handler*/
+    signal(SIGINT, handler);
+    /*Reprompt*/
+    printf("\n8-P ");
+    /*Signal that prompt has been written*/
+    wrotePrompt = 1;
+    /*Slush stdout*/
+    fflush(stdout);
 }

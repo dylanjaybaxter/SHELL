@@ -1,0 +1,7 @@
+CPE 357 Asgn6
+Author: Dylan Baxter (dybaxter)
+Special Instructions: None
+Other Notes: My code adds a newline after interrupting a process, which is
+different from the provided function. There is also a macro in mush2.c that
+toggles colored CWD. Also, this class has been difficult, but also an absolute
+pleasure. Thanks for teaching the way you do.
