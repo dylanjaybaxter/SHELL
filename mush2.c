@@ -76,7 +76,7 @@ int main(int argc, char const *argv[]) {
 
     sigemptyset(&procMask);
     sigaddset(&procMask, SIGINT);
-    sigprocmask(SIG_BLOCK, &procMask, NULL);
+    /*sigprocmask(SIG_BLOCK, &procMask, NULL);*/
 
     /*Get Device and User Info*/
     if(-1 == gethostname(computer, PATH_MAX)){
