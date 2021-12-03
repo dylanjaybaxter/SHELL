@@ -127,6 +127,8 @@ int main(int argc, char const *argv[]) {
 
     /*Read fd line by line until EOF(^D)*/
     while(((line = readLongString(fptr)) != NULL)){
+        /*New line! No prompt!*/
+        wrotePrompt = 0;
         /*Parse line to get command info*/
         if(DEBUG){
             printf("CREATING PIPELINE\n");
@@ -383,7 +385,6 @@ int main(int argc, char const *argv[]) {
         else if(!readFromFile && !wrotePrompt){
             printf("8-P ");
         }
-        wrotePrompt = 0;
         fflush(stdout);
 
     }
