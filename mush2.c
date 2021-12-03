@@ -394,7 +394,6 @@ int main(int argc, char const *argv[]) {
 }
 
 void handler(int signal){
-    if(DEBUG){
-        printf("\n");
-    }
+        printf("\n8-P ");
+
 }
