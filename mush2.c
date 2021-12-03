@@ -125,6 +125,7 @@ int main(int argc, char const *argv[]) {
 
     /*Read fd line by line until EOF(^D)*/
     while(((line = readLongString(fptr)) != NULL)||reset){
+        /**/
         if(!reset){
             /*Parse line to get command info*/
             if(DEBUG){
@@ -384,7 +385,6 @@ int main(int argc, char const *argv[]) {
         else if(!readFromFile){
             printf("8-P ");
         }
-
         fflush(stdout);
 
     }
