@@ -68,17 +68,6 @@ int main(int argc, char const *argv[]) {
     char user[PATH_MAX] = {0};
     char computer[PATH_MAX] = {0};
 
-    /*Setup interrupt handler OR Block signal*/
-    /*struct sigaction sa;
-    sa.sa_handler = handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGINT, &sa, NULL);
-
-    sigemptyset(&procMask);
-    sigaddset(&procMask, SIGINT);*/
-    /*sigprocmask(SIG_BLOCK, &procMask, NULL);*/
-
     signal(SIGINT, handler);
 
     /*Get Device and User Info*/
@@ -213,7 +202,7 @@ int main(int argc, char const *argv[]) {
                     if(stage < ((pipeln->length)-1)){
                         if(-1 == pipe(postpipe)){
                             perror("Piping");
-                            exit(EXIT_FAILURE);
+                            break;
                         }
                         if(DEBUG){
                             printf("Created pipe [%d %d]...\n",
@@ -260,7 +249,7 @@ int main(int argc, char const *argv[]) {
                     /*Spawn and break child from loop*/
                     if(-1 == (forkVal = fork())){
                         perror("Fork Failed");
-                        exit(EXIT_FAILURE);
+                        break;
                     }
                     if(forkVal == CHILD){
                         if(DEBUG){
