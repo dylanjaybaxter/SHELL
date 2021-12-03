@@ -392,7 +392,9 @@ int main(int argc, char const *argv[]) {
             exit(EXIT_FAILURE);
         }
     }else{
-        printf("\n");
+        if((isatty(0)&&isatty(1))){
+            printf("\n");
+        }
     }
     if(DEBUG){
         printf("\nExiting Normally");
