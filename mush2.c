@@ -146,19 +146,19 @@ int main(int argc, char const *argv[]) {
                     printf("cd detected...\n");
                 }
                 /*Clear Home*/
-                memset(home, '\0', PATH_MAX);
+                home = NULL;
                 /*Check for cd*/
                 if((pipeln->stage->argv[1] == NULL) ||
                 !(strcmp(pipeln->stage->argv[1],"~\0"))){
                     /*Try finding home in PATH*/
-                    if(NULL == (strcpy(home,getenv("HOME")))){
+                    if(NULL == (home = getenv("HOME"))){
                         /*Try finding home in pwd*/
-                        if(NULL == (pswd = getpwuid(getuid()))){
+                        if(NULL == (pswd = (struct passwd*)getpwuid(getuid()))){
                             /*Give up*/
                             fprintf(stderr,
                                 "unable to determine home directory");
                         }else{
-                            strcpy(home, pswd->pw_dir);
+                            home = pswd->pw_dir;
                         }
                     }
                     if(DEBUG){
