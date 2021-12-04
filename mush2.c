@@ -12,6 +12,8 @@ functionality for a limited shell
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <pwd.h>
+#include <sys/types.h>
 
 /*Signals*/
 #include <signal.h>
