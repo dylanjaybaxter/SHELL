@@ -13,7 +13,7 @@ mush2.o: mush2.c
 	$(CC) $(CFLAGS) -I ~pn-cs357/Given/Mush/libmush/include -c -o \
 	mush2.o mush2.c
 
-#This is for catching compile errors without the library included
+#This is for catching compile errors without the library included 
 comp:
 	$(CC) $(CFLAGS) -c -o mush2.o mush2.c
 	$(CC) $(CFLAGS) -o mush2 mush2.o
