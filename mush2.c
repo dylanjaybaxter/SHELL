@@ -68,6 +68,8 @@ int main(int argc, char const *argv[]) {
     /*Info*/
     char user[PATH_MAX] = {0};
     char computer[PATH_MAX] = {0};
+    char* home;
+    struct passwd* pswd;
 
     /*Set the signal handler*/
     signal(SIGINT, handler);
@@ -143,13 +145,27 @@ int main(int argc, char const *argv[]) {
                 if(DEBUG){
                     printf("cd detected...\n");
                 }
+                /*Clear Home*/
+                memset(home, '\0', PATH_MAX);
+                /*Check for cd*/
                 if((pipeln->stage->argv[1] == NULL) ||
                 !(strcmp(pipeln->stage->argv[1],"~\0"))){
+                    /*Try finding home in PATH*/
+                    if(NULL == (strcpy(home,getenv("HOME")))){
+                        /*Try finding home in pwd*/
+                        if(NULL == (pswd = getpwuid(getuid()))){
+                            /*Give up*/
+                            fprintf(stderr,
+                                "unable to determine home directory");
+                        }else{
+                            strcpy(home, pswd->pw_dir);
+                        }
+                    }
                     if(DEBUG){
                         printf("HOME: %s\n",getenv("HOME"));
                     }
-                    if(-1 == chdir(getenv("HOME"))){
-                        perror(getenv("HOME"));
+                    if(-1 == chdir(home)){
+                        perror("chdir");
                     }
                 }else{
                     if(-1 == chdir(pipeln->stage->argv[1])){
