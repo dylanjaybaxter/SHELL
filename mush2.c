@@ -65,7 +65,6 @@ int main(int argc, char const *argv[]) {
     int numProc = 0;
     int childStat = 0;
     int pid = 0;
-    sigset_t procMask;
 
     /*Info*/
     char user[PATH_MAX] = {0};
@@ -307,7 +306,7 @@ int main(int argc, char const *argv[]) {
 /*----------------------If exit as Child------------------------------*/
                 if(forkVal == CHILD){
                     /*Unblock SIGINT*/
-                    sigprocmask(SIG_UNBLOCK, &procMask, NULL);
+                    /*sigprocmask(SIG_UNBLOCK, &procMask, NULL);*/
 
                     /*Hook up file descriptors*/
                     if(DEBUG){
