@@ -153,7 +153,7 @@ int main(int argc, char const *argv[]) {
                 if((pipeln->stage->argv[1] == NULL) ||
                 !(strcmp(pipeln->stage->argv[1],"~\0"))){
                     /*Try finding home in PATH*/
-                    if(NULL == (home = getenv("HOME"))){
+                    if(1){/*NULL == (home = getenv("HOME"))){*/
                         /*Try finding home in pwd*/
                         if(NULL == (pswd = (struct passwd*)getpwuid(getuid()))){
                             /*Give up*/
